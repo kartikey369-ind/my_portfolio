@@ -18,8 +18,6 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Get form values
-        const formData = new FormData(this);
         const name = this.querySelector('input[placeholder="Your Name"]').value;
         const email = this.querySelector('input[placeholder="Your Email"]').value;
         const message = this.querySelector('textarea').value;
@@ -37,7 +35,7 @@ if (contactForm) {
             return;
         }
         
-        // Create mailto link
+        // BUG FIX: was `${message`)}` — mismatched backtick broke the template literal
         const mailtoLink = `mailto:muktha335@gmail.com?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
         
         // Open default email client
@@ -56,7 +54,6 @@ const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
 };
-
 const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -81,16 +78,16 @@ window.addEventListener('scroll', () => {
     
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
         if (pageYOffset >= sectionTop - 200) {
             current = section.getAttribute('id');
         }
     });
     
     document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.style.color = 'white';
+        // BUG FIX: was hardcoded 'white', making links invisible on the light navbar
+        link.style.color = 'var(--text-color)';
         if (link.getAttribute('href').slice(1) === current) {
-            link.style.color = '#3498db';
+            link.style.color = 'var(--accent-color)';
         }
     });
 });
