@@ -1,4 +1,3 @@
-// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -12,7 +11,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Contact form submission
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
@@ -22,26 +20,22 @@ if (contactForm) {
         const email = this.querySelector('input[placeholder="Your Email"]').value;
         const message = this.querySelector('textarea').value;
         
-        // Simple validation
         if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
             alert('Please fill in all fields!');
             return;
         }
         
-        // Email validation regex
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             alert('Please enter a valid email address!');
             return;
         }
         
-        // BUG FIX: was `${message`)}` — mismatched backtick broke the template literal
         const mailtoLink = `mailto:muktha335@gmail.com?subject=Message from ${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
         
         // Open default email client
         window.location.href = mailtoLink;
         
-        // Reset form
         setTimeout(() => {
             this.reset();
             alert('Thank you for your message! Opening your email client...');
@@ -49,7 +43,6 @@ if (contactForm) {
     });
 }
 
-// Add scroll animation for skill cards
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -63,7 +56,6 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-// Observe all skill cards and project cards
 document.querySelectorAll('.skill-card, .project-card').forEach(card => {
     card.style.opacity = '0';
     card.style.transform = 'translateY(20px)';
@@ -71,7 +63,6 @@ document.querySelectorAll('.skill-card, .project-card').forEach(card => {
     observer.observe(card);
 });
 
-// Add active state to navigation
 window.addEventListener('scroll', () => {
     let current = '';
     const sections = document.querySelectorAll('section');
@@ -84,7 +75,7 @@ window.addEventListener('scroll', () => {
     });
     
     document.querySelectorAll('.nav-menu a').forEach(link => {
-        // BUG FIX: was hardcoded 'white', making links invisible on the light navbar
+        // this hardcoded white making them invisible like batman
         link.style.color = 'var(--text-color)';
         if (link.getAttribute('href').slice(1) === current) {
             link.style.color = 'var(--accent-color)';
